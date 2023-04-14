@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 public class Country implements Serializable
 {
-    private int ID;
+    private long ID;
     private String name;
     private String capital;
     private int population;
@@ -15,7 +15,14 @@ public class Country implements Serializable
         this.population = population;
     }
 
-    public int getID() {
+    public Country(long ID, String name, String capital, int population) {
+        this.ID = ID;
+        this.name = name;
+        this.capital = capital;
+        this.population = population;
+    }
+
+    public long getID() {
         return ID;
     }
 

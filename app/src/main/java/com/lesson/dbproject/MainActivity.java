@@ -3,6 +3,7 @@ package com.lesson.dbproject;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Toast;
@@ -10,14 +11,16 @@ import android.widget.Toast;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
-    ArrayList<Country> list = new ArrayList<>();
-
+    private ArrayList<Country> list = new ArrayList<>();
+    private DBCountry db;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         RecyclerView recyclerView = findViewById(R.id.rv);
-        list.add(new Country("Франция","Париж",65000000));
+        db=new DBCountry(this);
+        db.Insert(1,"Germany","Berlin",3000000);
+
         CountryAdapter.OnCountryClickListener onCountryClickListener = new CountryAdapter.OnCountryClickListener() {
             @Override
             public void onCountryClick(Country country, int position) {
@@ -26,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         };
-        CountryAdapter adapter = new CountryAdapter(this, list, onCountryClickListener);
+        CountryAdapter adapter = new CountryAdapter(this, db.selectAll(), onCountryClickListener);
         recyclerView.setAdapter(adapter);
     }
 }
